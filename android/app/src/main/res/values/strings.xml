@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">কাজল (Kajol)</string>
     <string name="service_notification_title">কাজল সক্রিয় রয়েছে</string>
-    <string name="service_notification_text">"হ্যালো কাজল" বলে যেকোনো কমান্ড দিন</string>
+    <string name="service_notification_text">\"হ্যালো কাজল\" বলে যেকোনো কমান্ড দিন</string>
     <string name="default_wake_phrase">হ্যালো কাজল</string>
     <string name="overlay_listening">শুনছি…</string>
     <string name="overlay_thinking">ভাবছি…</string>

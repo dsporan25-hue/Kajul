@@ -364,7 +364,7 @@ dependencies {
     content: `<resources>
     <string name="app_name">কাজল (Kajol)</string>
     <string name="service_notification_title">কাজল সক্রিয় রয়েছে</string>
-    <string name="service_notification_text">"হ্যালো কাজল" বলে যেকোনো কমান্ড দিন</string>
+    <string name="service_notification_text">\\"হ্যালো কাজল\\" বলে যেকোনো কমান্ড দিন</string>
     <string name="default_wake_phrase">হ্যালো কাজল</string>
     <string name="overlay_listening">শুনছি…</string>
     <string name="overlay_thinking">ভাবছি…</string>
@@ -1232,11 +1232,128 @@ class LockScreenVoiceActivity : ComponentActivity() {
 }`
   },
   {
+    path: 'gradlew',
+    name: 'gradlew',
+    category: 'gradle',
+    language: 'bash',
+    description: 'Official POSIX Gradle wrapper startup script for Linux and macOS.',
+    content: `#!/bin/sh
+APP_HOME=$(cd "$(dirname "$0")" && pwd -P) || exit
+APP_NAME="Gradle"
+APP_BASE_NAME=\${0##*/}
+DEFAULT_JVM_OPTS='"-Xmx64m" "-Xms64m"'
+CLASSPATH=$APP_HOME/gradle/wrapper/gradle-wrapper.jar
+
+if [ -n "$JAVA_HOME" ] ; then
+    JAVACMD=$JAVA_HOME/bin/java
+else
+    JAVACMD=java
+fi
+
+eval set -- "$DEFAULT_JVM_OPTS" "$JAVA_OPTS" "$GRADLE_OPTS" "\\"-Dorg.gradle.appname=$APP_BASE_NAME\\"" -classpath "\\"$CLASSPATH\\"" org.gradle.wrapper.GradleWrapperMain '"$@"'
+exec "$JAVACMD" "$@"`
+  },
+  {
+    path: 'gradlew.bat',
+    name: 'gradlew.bat',
+    category: 'gradle',
+    language: 'bat',
+    description: 'Official Windows batch Gradle wrapper startup script.',
+    content: `@if "%DEBUG%" == "" @echo off
+set DIRNAME=%~dp0
+if "%DIRNAME%" == "" set DIRNAME=.
+set APP_BASE_NAME=%~n0
+set APP_HOME=%DIRNAME%
+set DEFAULT_JVM_OPTS="-Xmx64m" "-Xms64m"
+set JAVA_EXE=java.exe
+set CLASSPATH=%APP_HOME%\\gradle\\wrapper\\gradle-wrapper.jar
+"%JAVA_EXE%" %DEFAULT_JVM_OPTS% %JAVA_OPTS% %GRADLE_OPTS% "-Dorg.gradle.appname=%APP_BASE_NAME%" -classpath "%CLASSPATH%" org.gradle.wrapper.GradleWrapperMain %*`
+  },
+  {
+    path: 'gradle/wrapper/gradle-wrapper.properties',
+    name: 'gradle-wrapper.properties',
+    category: 'gradle',
+    language: 'properties',
+    description: 'Gradle wrapper configuration pointing to Gradle 8.11.1 distribution.',
+    content: `distributionBase=GRADLE_USER_HOME
+distributionPath=wrapper/dists
+distributionUrl=https\\://services.gradle.org/distributions/gradle-8.11.1-bin.zip
+networkTimeout=10000
+validateDistributionUrl=true
+zipStoreBase=GRADLE_USER_HOME
+zipStorePath=wrapper/dists`
+  },
+  {
+    path: 'app/src/main/res/drawable/ic_launcher_background.xml',
+    name: 'ic_launcher_background.xml',
+    category: 'res',
+    language: 'xml',
+    description: 'Dark navy background for adaptive launcher icon.',
+    content: `<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <path
+        android:fillColor="#0B1020"
+        android:pathData="M0,0h108v108h-108z" />
+</vector>`
+  },
+  {
+    path: 'app/src/main/res/drawable/ic_launcher_foreground.xml',
+    name: 'ic_launcher_foreground.xml',
+    category: 'res',
+    language: 'xml',
+    description: 'Teal microphone foreground for adaptive launcher icon.',
+    content: `<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <group
+        android:scaleX="0.6"
+        android:scaleY="0.6"
+        android:translateX="21.6"
+        android:translateY="21.6">
+        <path
+            android:fillColor="#4FD1C5"
+            android:pathData="M54,65c5.52,0 10,-4.48 10,-10V25c0,-5.52 -4.48,-10 -10,-10s-10,4.48 -10,10v30C44,60.52 48.48,65 54,65z" />
+        <path
+            android:fillColor="#4FD1C5"
+            android:pathData="M73,50c0,10.5 -8.5,19 -19,19s-19,-8.5 -19,-19h-5c0,12.42 9.42,22.72 21.5,23.85V85H44v5h20v-5H56.5V73.85C68.58,72.72 78,62.42 78,50H73z" />
+    </group>
+</vector>`
+  },
+  {
+    path: 'app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml',
+    name: 'ic_launcher.xml',
+    category: 'res',
+    language: 'xml',
+    description: 'Adaptive launcher icon definition linking background and foreground.',
+    content: `<?xml version="1.0" encoding="utf-8"?>
+<adaptive-icon xmlns:android="http://schemas.android.com/apk/res/android">
+    <background android:drawable="@drawable/ic_launcher_background" />
+    <foreground android:drawable="@drawable/ic_launcher_foreground" />
+</adaptive-icon>`
+  },
+  {
+    path: 'app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml',
+    name: 'ic_launcher_round.xml',
+    category: 'res',
+    language: 'xml',
+    description: 'Adaptive round launcher icon definition.',
+    content: `<?xml version="1.0" encoding="utf-8"?>
+<adaptive-icon xmlns:android="http://schemas.android.com/apk/res/android">
+    <background android:drawable="@drawable/ic_launcher_background" />
+    <foreground android:drawable="@drawable/ic_launcher_foreground" />
+</adaptive-icon>`
+  },
+  {
     path: '.github/workflows/android.yml',
     name: 'android.yml',
     category: 'workflow',
     language: 'yaml',
-    description: 'GitHub Actions workflow to automate building, testing, and assembling the Debug APK artifact.',
+    description: 'Resilient GitHub Actions workflow with Gradle CLI setup, auto-wrapper generation, and APK build.',
     content: `name: Android CI - Build Kajol Debug APK
 
 on:
@@ -1260,20 +1377,46 @@ jobs:
         with:
           java-version: '17'
           distribution: 'temurin'
-          cache: gradle
 
-      - name: Grant execute permission for gradlew
-        run: chmod +x gradlew || true
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: '8.11.1'
+
+      - name: Locate Android Project & Prepare Wrapper
+        run: |
+          if [ -f "settings.gradle.kts" ] || [ -f "settings.gradle" ]; then
+            echo "PROJECT_DIR=." >> $GITHUB_ENV
+            TARGET_DIR="."
+          elif [ -d "android" ] && ( [ -f "android/settings.gradle.kts" ] || [ -f "android/settings.gradle" ] ); then
+            echo "PROJECT_DIR=android" >> $GITHUB_ENV
+            TARGET_DIR="android"
+          else
+            echo "PROJECT_DIR=." >> $GITHUB_ENV
+            TARGET_DIR="."
+          fi
+
+          echo "Detected Android project in: $TARGET_DIR"
+          cd "$TARGET_DIR"
+
+          if [ ! -f "gradlew" ]; then
+            echo "Generating Gradle wrapper..."
+            gradle wrapper --gradle-version 8.11.1 --distribution-type bin
+          fi
+
+          chmod +x gradlew
 
       - name: Build Debug APK with Gradle
-        run: ./gradlew assembleDebug --stacktrace
-        continue-on-error: false
+        run: |
+          cd \${{ env.PROJECT_DIR }}
+          ./gradlew assembleDebug --stacktrace --no-daemon
 
       - name: Upload Debug APK Artifact
         uses: actions/upload-artifact@v4
         with:
           name: Kajol-Debug-APK
-          path: app/build/outputs/apk/debug/app-debug.apk
+          path: |
+            **/build/outputs/apk/debug/*.apk
           retention-days: 14`
   }
 ];

@@ -32,16 +32,13 @@ export const CodeExplorer: React.FC = () => {
 
       // Add all project files into the zip archive preserving directory structure
       ANDROID_PROJECT_FILES.forEach((file) => {
-        zip.file(file.path, file.content);
+        if (file.path === 'gradlew') {
+          zip.file(file.path, file.content, { unixPermissions: '755' });
+        } else {
+          zip.file(file.path, file.content);
+        }
       });
 
-      // Add gradlew shell script and bat file placeholder
-      zip.file(
-        'gradlew',
-        `#!/usr/bin/env sh
-exec java -version
-`
-      );
       zip.file(
         'README.md',
         `# Kajol (কাজল) - Bengali Voice AI Assistant for Android

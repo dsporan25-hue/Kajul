@@ -21,18 +21,47 @@ jobs:
         with:
           java-version: '17'
           distribution: 'temurin'
-          cache: gradle
 
-      - name: Grant execute permission for gradlew
-        run: chmod +x gradlew || true
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: '8.11.1'
+
+      - name: Locate Android Project & Prepare Wrapper
+        run: |
+          # Detect whether the Android project is in repository root or in 'android' directory
+          if [ -f "settings.gradle.kts" ] || [ -f "settings.gradle" ]; then
+            echo "PROJECT_DIR=." >> $GITHUB_ENV
+            TARGET_DIR="."
+          elif [ -d "android" ] && ( [ -f "android/settings.gradle.kts" ] || [ -f "android/settings.gradle" ] ); then
+            echo "PROJECT_DIR=android" >> $GITHUB_ENV
+            TARGET_DIR="android"
+          else
+            echo "PROJECT_DIR=." >> $GITHUB_ENV
+            TARGET_DIR="."
+          fi
+
+          echo "Detected Android project in: $TARGET_DIR"
+          cd "$TARGET_DIR"
+
+          # If gradlew does not exist, generate it via the pre-installed Gradle CLI
+          if [ ! -f "gradlew" ]; then
+            echo "Generating Gradle wrapper..."
+            gradle wrapper --gradle-version 8.11.1 --distribution-type bin
+          fi
+
+          chmod +x gradlew
+          ls -la gradlew
 
       - name: Build Debug APK with Gradle
-        run: ./gradlew assembleDebug --stacktrace
-        continue-on-error: false
+        run: |
+          cd ${{ env.PROJECT_DIR }}
+          ./gradlew assembleDebug --stacktrace --no-daemon
 
       - name: Upload Debug APK Artifact
         uses: actions/upload-artifact@v4
         with:
           name: Kajol-Debug-APK
-          path: app/build/outputs/apk/debug/app-debug.apk
+          path: |
+            **/build/outputs/apk/debug/*.apk
           retention-days: 14
