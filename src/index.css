@@ -1,0 +1,45 @@
+@import "tailwindcss";
+
+@layer base {
+  body {
+    font-family: 'Hind Siliguri', 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+    background-color: #0B1020;
+    color: #F3F4F6;
+    overflow-x: hidden;
+  }
+}
+
+/* Custom scrollbars */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #0B1020;
+}
+::-webkit-scrollbar-thumb {
+  background: #1F293D;
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #4FD1C5;
+}
+
+@keyframes pulseGlow {
+  0%, 100% {
+    box-shadow: 0 0 25px rgba(79, 209, 197, 0.4), inset 0 0 15px rgba(79, 209, 197, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 50px rgba(79, 209, 197, 0.75), inset 0 0 30px rgba(79, 209, 197, 0.5);
+  }
+}
+
+@keyframes voiceWave {
+  0%, 100% { height: 8px; }
+  50% { height: 36px; }
+}
+
+.animate-pulse-glow {
+  animation: pulseGlow 2.5s infinite ease-in-out;
+}
+
