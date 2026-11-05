@@ -39,6 +39,17 @@ export const CodeExplorer: React.FC = () => {
         }
       });
 
+      // Bundle gradle-wrapper.jar binary
+      try {
+        const jarRes = await fetch('/gradle/wrapper/gradle-wrapper.jar');
+        if (jarRes.ok) {
+          const jarBlob = await jarRes.blob();
+          zip.file('gradle/wrapper/gradle-wrapper.jar', jarBlob);
+        }
+      } catch (err) {
+        console.warn('Wrapper jar fetch skipped:', err);
+      }
+
       zip.file(
         'README.md',
         `# Kajol (কাজল) - Bengali Voice AI Assistant for Android

@@ -1383,33 +1383,48 @@ jobs:
         with:
           gradle-version: '8.11.1'
 
-      - name: Locate Android Project & Prepare Wrapper
+      - name: Locate Android Project & Ensure Wrapper
         run: |
           if [ -f "settings.gradle.kts" ] || [ -f "settings.gradle" ]; then
-            echo "PROJECT_DIR=." >> $GITHUB_ENV
             TARGET_DIR="."
           elif [ -d "android" ] && ( [ -f "android/settings.gradle.kts" ] || [ -f "android/settings.gradle" ] ); then
-            echo "PROJECT_DIR=android" >> $GITHUB_ENV
             TARGET_DIR="android"
           else
-            echo "PROJECT_DIR=." >> $GITHUB_ENV
             TARGET_DIR="."
           fi
 
+          echo "PROJECT_DIR=$TARGET_DIR" >> $GITHUB_ENV
           echo "Detected Android project in: $TARGET_DIR"
           cd "$TARGET_DIR"
 
-          if [ ! -f "gradlew" ]; then
-            echo "Generating Gradle wrapper..."
-            gradle wrapper --gradle-version 8.11.1 --distribution-type bin
+          mkdir -p gradle/wrapper
+
+          if [ ! -f "gradle/wrapper/gradle-wrapper.jar" ] || [ ! -s "gradle/wrapper/gradle-wrapper.jar" ]; then
+            echo "gradle-wrapper.jar is missing. Regenerating..."
+            gradle wrapper --gradle-version 8.11.1 --distribution-type bin || \\
+            curl -sLo gradle/wrapper/gradle-wrapper.jar https://raw.githubusercontent.com/gradle/gradle/v8.11.1/gradle/wrapper/gradle-wrapper.jar
           fi
 
+          if [ ! -f "gradlew" ]; then
+            gradle wrapper --gradle-version 8.11.1 --distribution-type bin
+          fi
           chmod +x gradlew
 
-      - name: Build Debug APK with Gradle
+          echo "Gradle wrapper status:"
+          ls -la gradle/wrapper/
+          ls -la gradlew
+
+      - name: Build Debug APK
         run: |
           cd \${{ env.PROJECT_DIR }}
-          ./gradlew assembleDebug --stacktrace --no-daemon
+
+          if ./gradlew --version >/dev/null 2>&1; then
+            echo "Building with ./gradlew..."
+            ./gradlew assembleDebug --stacktrace --no-daemon
+          else
+            echo "Wrapper check failed, building directly with Gradle CLI..."
+            gradle assembleDebug --stacktrace --no-daemon
+          fi
 
       - name: Upload Debug APK Artifact
         uses: actions/upload-artifact@v4
