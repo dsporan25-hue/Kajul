@@ -39,6 +39,32 @@ rootProject.name = "KajolAssistant"
 include(":app")`
   },
   {
+    path: 'gradle.properties',
+    name: 'gradle.properties',
+    category: 'gradle',
+    language: 'properties',
+    description: 'Project-wide Gradle properties enabling AndroidX, Jetifier, and JVM memory.',
+    content: `# Project-wide Gradle settings for Kajol Assistant Android App
+
+# Enable AndroidX and Jetifier
+android.useAndroidX=true
+android.enableJetifier=true
+
+# JVM Arguments for Gradle Daemon
+org.gradle.jvmargs=-Xmx2048m -Dfile.encoding=UTF-8
+
+# Official Kotlin code style
+kotlin.code.style=official
+
+# Non-transitive R class for faster build times and smaller APK size
+android.nonTransitiveRClass=true
+
+# Parallel execution and caching
+org.gradle.parallel=true
+org.gradle.caching=true
+org.gradle.vfs.watch=true`
+  },
+  {
     path: 'build.gradle.kts',
     name: 'build.gradle.kts',
     category: 'gradle',
